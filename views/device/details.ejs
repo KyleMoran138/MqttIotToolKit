@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <a href="/">&#8592;back</a>
+    <h1 id="deviceId"><%=device.id %></h1>
+    <h4>Actions</h4><input id="aName" type="text" placeholder="Action name"><button id="createAction">Create</button>
+    <ul>
+      <% for(key in device.actions) { %>
+        <li><%= key %></li>
+        <textarea id="<%= key %>Function">
+          <%= device.actions[key] %>
+        </textarea>
+        <button id="<%=device.id %>:<%= key %>" class="save">Save!</button>
+        <button id="<%=device.id %>:<%= key %>" class="delete">delete!</button>
+      <% } %>
+    </ul>
+  </body>
+  <script type="text/javascript">
+    $('#createAction').on('click', () => {
+      let actionName = $('#aName').val()
+      let action = (()=>{}).toString()
+      let id = <%=device.id %>
+      $.post( "/action/create/"+id, { name: actionName, action: action } );
+    });
+
+    $('.save').on('click', (event) => {
+      let id = event.target.id.split(':')[0]
+      let actionName = event.target.id.split(':')[1]
+      let action = $('#'+actionName+'Function').val()
+      $.post( "/action/create/"+id, { name: actionName, action: action } );
+    });
+    $('.delete').on('click', (event) => {
+      let id = event.target.id.split(':')[0]
+      let actionName = event.target.id.split(':')[1]
+      $.post( "/action/remove/"+id, { name: actionName } );
+    });
+  </script>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "mqtt-iot-controller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "nodemon --ignore devices.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@me.github.com:KyleMoran138/MqttIotController.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "bonjour": "^3.5.0",
+    "data-store": "^3.1.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mosca": "^2.8.3",
+    "mqtt": "^2.18.8",
+    "node-json-db": "^0.9.2"
+  }
+}
