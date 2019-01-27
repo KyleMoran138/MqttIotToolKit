@@ -1,5 +1,2 @@
-git pull origin master
-npm install —production
 npm run stopProd
 npm run startProd
-exit
