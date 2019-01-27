@@ -47,11 +47,12 @@ app.get('/device/:id', function(req, res){
 
 app.post('/action/create/:deviceId/', function(req, res){
   addDeviceAction(req.params.deviceId, req.body.name, req.body.action)
-  res.render('device/details', {device: devices[req.params.deviceId]})
+  res.sendStatus(200)
 })
+
 app.post('/action/remove/:deviceId/', function(req, res){
   removeDeviceAction(req.params.deviceId, req.body.name)
-  res.render('device/details', {device: devices[req.params.deviceId]})
+  res.sendStatus(200)
 })
 
 // Start express server
@@ -103,6 +104,7 @@ function runAction(deviceId, actionName){
       let actionMethod = device.actions[realActionName]
       if(realActionName == actionName){
         eval('[' + actionMethod + ']')[0]()
+        deviceConfigs.data = devices
       }
     }
   }
@@ -137,3 +139,5 @@ function removeDeviceAction(deviceId, actionName){
     deviceConfigs.del(deviceId+'.actions.'+actionName)
   }
 }
+
+module.exports = app

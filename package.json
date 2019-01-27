@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "nodemon --ignore devices.json"
+    "debug": "nodemon --ignore devices.json",
+    "startProd": "forever start index.js",
+    "stopProd": "forever stopall"
   },
   "repository": {
     "type": "git",
@@ -19,8 +21,11 @@
     "data-store": "^3.1.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "mocha": "^5.2.0",
     "mosca": "^2.8.3",
     "mqtt": "^2.18.8",
-    "node-json-db": "^0.9.2"
+    "node-json-db": "^0.9.2",
+    "safe-eval": "^0.4.1",
+    "supertest": "^3.4.2"
   }
 }
