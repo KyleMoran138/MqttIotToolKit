@@ -1,6 +1,6 @@
 const bodyParser = require('body-parser')
 const Store = require('data-store')
-var bonjour = require('bonjour')()
+const bonjour = require('bonjour')()
 const express = require('express')
 const mqtt = require('mqtt')
 const mosca = require('mosca')
@@ -11,6 +11,7 @@ const mqttServer = new mosca.Server({port: 1883})
 const mqttClient = mqtt.connect('mqtt://127.0.0.1')
 const app = express()
 const devices = {}
+let server = 0
 
 // Setup express app
 app.set('view engine', 'ejs')
@@ -36,6 +37,14 @@ mqttClient.on('message', function(topic, message){
   handelMqttMessage(topic, message)
 })
 
+process.on('SIGTERM', () => {
+  shutdownServer()
+});
+
+process.on('SIGINT', () => {
+  shutdownServer()
+});
+
 // Set up api endpoints
 app.get('/', function(req, res){
   res.render('index', {devices: devices})
@@ -56,7 +65,7 @@ app.post('/action/remove/:deviceId/', function(req, res){
 })
 
 // Start express server
-app.listen(3000, function(req, res){
+server = app.listen(3000, function(req, res){
   console.log('The mqtt toolset is ready at port 3000!')
 })
 
@@ -138,6 +147,15 @@ function removeDeviceAction(deviceId, actionName){
     device.actions[actionName] = undefined
     deviceConfigs.del(deviceId+'.actions.'+actionName)
   }
+}
+
+function shutdownServer(){
+  console.log('Shutting down server')
+  bonjour.unpublishAll()
+  server.close()
+  mqttClient.end()
+  mqttServer.close()
+  process.exit()
 }
 
 module.exports = app
