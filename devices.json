@@ -1,8 +1,0 @@
-{
-  "10261810": {
-    "id": "10261810",
-    "actions": {
-      "click": "()=>{\nthis.toggle = this.toggle == null ? true : !this.toggle\nlet XMLHttpRequest = require(\"xmlhttprequest\").XMLHttpRequest;\nlet xhr = new XMLHttpRequest();\nif(this.toggle){\nxhr.open(\"POST\", 'https://maker.ifttt.com/trigger/all_on_bath/with/key/jDs-4lDiXuxor7ikjD4CTd8Fr1L7ou0PkLqXN0NG18Q', true);\nconsole.log('on')\n}else{\nxhr.open(\"POST\", 'https://maker.ifttt.com/trigger/all_off_bath/with/key/jDs-4lDiXuxor7ikjD4CTd8Fr1L7ou0PkLqXN0NG18Q', true);\nconsole.log('off')\n} \nxhr.setRequestHeader('Content-Type', 'application/json');\nxhr.send(JSON.stringify({\n    value: \"\"}));\n\n}\n        \n        "
-    }
-  }
-}

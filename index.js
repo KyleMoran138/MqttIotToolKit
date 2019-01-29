@@ -1,6 +1,6 @@
 const bodyParser = require('body-parser')
 const Store = require('data-store')
-const bonjour = require('bonjour')()
+const bonjour = require('nbonjour').create();
 const express = require('express')
 const mqtt = require('mqtt')
 const mosca = require('mosca')
