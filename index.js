@@ -1,12 +1,6 @@
 const bodyParser = require('body-parser')
 const Store = require('data-store')
-const bonjour = require('nbonjour').create(
-  {
-    multicast: true,
-    port: 1883, // set the udp port
-    ttl: 255, // set the multicast ttl
-  }
-);
+const bonjour = require('bonjour')({ttl: 10})
 const express = require('express')
 const mqtt = require('mqtt')
 const mosca = require('mosca')
@@ -18,12 +12,12 @@ const mqttClient = mqtt.connect('mqtt://127.0.0.1')
 const app = express()
 const devices = {}
 let server = 0
+bonjour.publish({ name: 'mqtt-iot', type: 'mqtt', port: 1883 })
 
 // Setup express app
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended: true}))
-
 
 // Set event listeners
 mqttServer.on('ready', function(){
@@ -156,6 +150,7 @@ function removeDeviceAction(deviceId, actionName){
 function shutdownServer(){
   console.log('Shutting down server')
   bonjour.unpublishAll()
+  bonjour.destroy()
   server.close()
   mqttClient.end()
   mqttServer.close()
